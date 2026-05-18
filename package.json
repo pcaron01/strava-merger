@@ -1,20 +1,31 @@
 {
   "name": "strava-merger",
-  "version": "1.0.0",
-  "description": "Merge Strava fitness data",
-  "main": "index.js",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "start": "node index.js",
-    "dev": "node index.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "keywords": ["strava", "fitness", "merger"],
-  "author": "pcaron01",
-  "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2",
-    "@vercel/analytics": "^1.1.1"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "next": "^14.2.3",
+    "next-auth": "^5.0.0-beta.15",
+    "@prisma/client": "^5.12.0",
+    "prisma": "^5.12.0",
+    "tailwindcss": "^3.4.1",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "resend": "^3.0.0"
   },
-  "engines": {
-    "node": "24.x"
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "@types/node": "^20.12.12",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.3"
   }
 }
