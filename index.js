@@ -1,18 +1,43 @@
-const http = require('http');
+const express = require('express');
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'application/json');
-  
-  if (req.url === '/') {
-    res.end(JSON.stringify({ message: 'Strava Merger API' }));
-  } else if (req.url === '/api/health') {
-    res.end(JSON.stringify({ status: 'ok' }));
-  } else {
-    res.statusCode = 404;
-    res.end(JSON.stringify({ error: 'Not found' }));
-  }
+const app = express();
+
+app.use(express.json());
+
+// Health check endpoint
+app.get('/', (req, res) => {
+  res.json({ message: 'Strava Merger API', version: '1.0.0', status: 'ok' });
+});
+
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// Catch all 404s
+app.use((req, res) => {
+  res.status(404).json({ 
+    error: 'Not found', 
+    path: req.path,
+    method: req.method
+  });
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ 
+    error: 'Internal server error',
+    message: err.message
+  });
 });
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT);
+
+// Only listen if not in serverless environment
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+module.exports = app;
